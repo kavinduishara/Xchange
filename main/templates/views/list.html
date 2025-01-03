@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+  <h1>Listing Form</h1>
+  <form action="" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ listing_form|crispy }}
+    {{ location_form|crispy }}
+    <button type="submit" class="btn btn-danger">Submit</button>
+  </form>
+{% endblock body %}

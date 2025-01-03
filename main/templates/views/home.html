@@ -1,0 +1,45 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+  <title>home</title>
+{% endblock title %}
+
+{% block body %}
+<main class="bg-light">
+  <section class="d-flex justify-content-center align-items-center  p-3">
+      <div class="container text-center">
+        <div>
+          <img src="{% static 'photo/xchnagelogo.png' %}" class="m-auto d-block img-fluid" alt="">
+        </div>
+        <div class="text-secondary m-3">
+          <h2>Simplify Buying, Amplify Selling </h2>
+        </div>
+        <div class="row">
+          <div class="m-2">
+            <a href="{% url 'list' %}" class="btn btn-dark">list your item</a>
+          </div>
+          <div>
+            <form action="" method="get">
+              {{ listing_filter.form|crispy }}
+              <button type="submit" class="btn btn-dark">filter</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container-fluid mt-3">
+      <div class="row">
+        {% for listing in listing_filter.qs %}
+          <div class="col-md-6 col-lg-4 col-sm-12 mb-3">
+            {% include "components/list_card.html" %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+</main>
+
+    
+{% endblock %}

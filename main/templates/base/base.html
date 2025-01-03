@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+      <title>XChange</title>
+    {% endblock title %}
+    
+    <link rel="icon" href="{% static 'photo/xchnagelogoonly.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+</head>
+<body class="justify-content-center">
+    
+    {% block header %}
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-2">
+    <a href="/" class="navbar-brand">
+        <img src="{% static 'photo/xchnagelogoonly.png' %}" class="me-2" height="30" width="40" alt="XChange Logo">
+        XChange
+    </a>
+    <div class="collapse navbar-collapse">
+        {% if request.user.is_authenticated %}
+            <ul class="navbar-nav w-100">
+                <li class="nav-item">
+                    <a href="{% url 'profile' %}" class="nav-link">Profile</a>
+                </li>
+                <li class="nav-item ms-auto">
+                    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
+
+        
+    </header>
+    {% endblock header %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>        
+        {% endfor %}
+    {% endif %}
+
+    {% block body %}
+    {% endblock %}
+    {% block footer %}
+    <footer class="footer text-muted bg-dark">
+        
+        <div class="container text-white text-center mt-5 mb-0">
+            
+            <h3><img src="{% static 'photo/xchnagelogoonly.png' %}" class="bi me-2" height="30" width="40" alt=""> XChange</h3>
+            <p>Simplify Buying, Amplify Selling</p>
+            <p>copyright © {% now 'Y' %}</p>
+        </div>
+        
+    </footer>
+    {% endblock %}
+</body>
+</html>

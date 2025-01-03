@@ -1,0 +1,56 @@
+<div class="card p-1 text-center shadow-sm h-100">
+    
+    <h3 class="text-danger">RS. {{listing.price}}</h3>
+
+    
+    {% if listing.image %}
+        <img src="{{listing.image.url}}" alt="" class="mx-auto d-block img-fluid">
+    {% endif %}
+    <div class="d-flex justify-content-left align-items-center">
+        {% if listing.seller.user.profile.photo %}
+          <img src="{{listing.seller.user.profile.photo.url}}"  alt="Profile Picture" class="rounded-circle img-fluid" style="width: 50px; height: 50px; object-fit: cover;">
+        {% endif %}
+        <h6 class="text-left">  {{ listing.seller.user.username }}</h6>
+
+    </div>
+    
+    <h2>{{listing.name}}</h2>
+    <p class="card-text">{{listing.description}} </p>
+    <div class="d-flex align-item-bottom justify-content-between m-2 mt-auto">
+        <div class="btn-group">
+            <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'listing' id=listing.id %}">view</a>
+            {% if listing.seller.user == request.user %}
+            <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'edit' id=listing.id %}">edit</a>
+            {% endif %}
+        </div>
+        <small class="text-muted">{{listing.updated_at}}</small>
+        <button type="button" 
+        value="like" 
+        class="btn {% if listing.id in user_liked_listings_ids %}btn-danger{% else %}btn-secondary{% endif %}" 
+        id="like_{{listing.id}}">
+            like
+        </button>
+        
+    </div>
+</div>
+
+<script>
+    $('#like_{{listing.id}}').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'like_listing' id=listing.id %}",
+            data: {'csrfmiddlewaretoken': '{{csrf_token}}'},
+            dataType: "json",
+            success: function (r) {
+                if (r.is_liked_by_user) {
+                    $('#like_{{listing.id}}').removeClass('btn-secondary').addClass('btn-danger')
+                } else {
+                    $('#like_{{listing.id}}').addClass('btn-secondary').removeClass('btn-danger')
+                }
+            },
+            error: function (rs, e) {
+                alert(e)
+            }
+        });
+    })
+</script>

@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block header %}
+  {% block title %}
+    <title>login</title>
+  {% endblock title %}
+{% endblock header %}
+{% block body %}
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="text-center w-100" style="max-width: 400px;">
+        <main class="form-signin">
+            <form action="" method="post">
+                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                {% csrf_token %}
+                <!-- Render the login form -->
+                {{ login_form|crispy }}
+                
+                <button type="submit" class="w-100 btn btn-lg btn-primary mt-3">Sign in</button>
+            </form>
+        </main>
+    </div>
+</div>
+{% endblock %}
