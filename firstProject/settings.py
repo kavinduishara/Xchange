@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django_filters',
     'main',
     'users',
+    "cloudinary", 
+    "cloudinary_storage"
 ]
 
 MIDDLEWARE = [
@@ -170,3 +172,10 @@ DEFAULT_FROM_EMAIL = 'kavinduishara2923@gmail.com'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": "dortoiaig",
+    "API_KEY": "994893459139734",
+    "API_SECRET": "taW-xVpCf9-Don4tAUArbFXd1VM",
+}
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
