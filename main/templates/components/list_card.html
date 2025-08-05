@@ -35,22 +35,26 @@
 </div>
 
 <script>
-    $('#like_{{listing.id}}').click(function () {
-        $.ajax({
-            type: "POST",
-            url: "{% url 'like_listing' id=listing.id %}",
-            data: {'csrfmiddlewaretoken': '{{csrf_token}}'},
-            dataType: "json",
-            success: function (r) {
-                if (r.is_liked_by_user) {
-                    $('#like_{{listing.id}}').removeClass('btn-secondary').addClass('btn-danger')
-                } else {
-                    $('#like_{{listing.id}}').addClass('btn-secondary').removeClass('btn-danger')
-                }
-            },
-            error: function (rs, e) {
-                alert(e)
-            }
-        });
+document.querySelector('#like_{{ listing.id }}').addEventListener('click', function () {
+    fetch("{% url 'like_listing' id=listing.id %}", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({})
     })
+    .then(response => response.json())
+    .then(data => {
+        if (data.is_liked_by_user) {
+            this.classList.remove('btn-secondary');
+            this.classList.add('btn-danger');
+        } else {
+            this.classList.add('btn-secondary');
+            this.classList.remove('btn-danger');
+        }
+    })
+    .catch(error => alert(error));
+});
+
 </script>

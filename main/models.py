@@ -6,7 +6,7 @@ from .utils import user_listing_path
 
 
 class Listing(models.Model):
-    id = models.AutoField(primary_key=True)  
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)    
     name = models.CharField(max_length=100, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
